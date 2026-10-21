@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="hi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sohil Furniture Mart | Luxury & Quality Furniture</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fdf8f6',
+              100: '#f2e8e5',
+              200: '#e4d1cb',
+              300: '#d0b2a7',
+              400: '#b78b7a',
+              500: '#9d6754',
+              600: '#855140',
+              700: '#6e4033',
+              800: '#5c362c',
+              900: '#4e2f27',
+              950: '#2c1813',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #fdf8f6; }
+    ::-webkit-scrollbar-thumb { background: #b78b7a; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #855140; }
+  </style>
+</head>
+<body class="bg-brand-50/40 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- HEADER / NAVIGATION BAR -->
+  <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-brand-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('shop')">
+          <div class="bg-brand-900 text-amber-400 p-3 rounded-2xl shadow-md border border-brand-700 flex items-center justify-center">
+            <i class="fa-solid fa-couch text-2xl"></i>
+          </div>
+          <div>
+            <h1 class="text-xl sm:text-2xl font-black text-brand-950 tracking-tight leading-none uppercase">
+              SOHIL <span class="text-brand-600">FURNITURE</span>
+            </h1>
+            <p class="text-[10px] font-bold text-brand-600 tracking-widest uppercase mt-0.5">Mart & Interior Decor</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8 font-semibold text-slate-600 text-sm">
+          <button id="nav-shop-btn" onclick="switchTab('shop')" class="text-brand-800 font-bold hover:text-brand-900 transition-colors flex items-center gap-2 border-b-2 border-brand-800 py-1">
+            <i class="fa-solid fa-store"></i> Shop Furniture
+          </button>
+          <button id="nav-admin-btn" onclick="openAdminPinModal()" class="text-slate-500 hover:text-brand-800 transition-colors flex items-center gap-2 py-1">
+            <i class="fa-solid fa-lock text-brand-600"></i> Admin Panel
+          </button>
+        </nav>
+
+        <!-- Right Side: Cart Button -->
+        <div class="flex items-center gap-3">
+          <button onclick="toggleCartModal()" class="relative bg-brand-100/80 hover:bg-brand-200 text-brand-950 px-4 py-2.5 rounded-xl font-bold transition flex items-center gap-2.5 border border-brand-200/80 shadow-sm">
+            <i class="fa-solid fa-bag-shopping text-brand-800 text-lg"></i>
+            <span class="hidden sm:inline text-sm">My Cart</span>
+            <span id="cart-count" class="bg-brand-800 text-amber-300 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Bottom Tab Navigation -->
+  <div class="md:hidden bg-white/95 backdrop-blur-md border-b border-brand-100 flex justify-around py-3 font-semibold text-xs sticky top-20 z-30 shadow-sm">
+    <button id="mob-shop-btn" onclick="switchTab('shop')" class="text-brand-900 font-bold flex items-center gap-1.5 px-3 py-1 bg-brand-100/60 rounded-lg">
+      <i class="fa-solid fa-store"></i> Shop Catalog
+    </button>
+    <button id="mob-admin-btn" onclick="openAdminPinModal()" class="text-slate-600 flex items-center gap-1.5 px-3 py-1">
+      <i class="fa-solid fa-lock text-brand-700"></i> Admin Panel
+    </button>
+  </div>
+
+  <!-- MAIN CUSTOMER SHOP VIEW -->
+  <main id="shop-view" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-10">
+    
+    <!-- Hero Banner Section -->
+    <div class="relative bg-gradient-to-r from-brand-950 via-brand-900 to-brand-800 rounded-3xl p-8 sm:p-12 text-white shadow-xl overflow-hidden border border-brand-800">
+      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#e4d1cb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <div class="relative z-10 max-w-2xl space-y-4">
+        <span class="bg-amber-400/20 text-amber-300 border border-amber-400/30 text-xs font-bold px-3.5 py-1.5 rounded-full tracking-wider uppercase inline-block">
+          <i class="fa-solid fa-award mr-1"></i> Official Sohil Furniture Store
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black leading-tight tracking-tight text-amber-50">
+          Transform Your Home With Modern Luxury Furniture
+        </h2>
+        <p class="text-brand-200/90 text-sm sm:text-base leading-relaxed">
+          Premium Teak Wood, Elegant Sofas, Custom Wardrobes & Designer Dining Sets. Crafted with durability and elegance.
+        </p>
+        <div class="pt-2 flex flex-wrap gap-4">
+          <a href="#catalog-section" class="bg-amber-400 hover:bg-amber-300 text-brand-950 font-extrabold px-6 py-3 rounded-xl transition shadow-lg inline-flex items-center gap-2">
+            Explore Catalog <i class="fa-solid fa-arrow-down text-xs"></i>
+          </a>
+          <button onclick="contactWhatsAppDirect()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-5 py-3 rounded-xl transition shadow-lg flex items-center gap-2">
+            <i class="fa-brands fa-whatsapp text-lg"></i> Direct WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div id="catalog-section" class="space-y-4 pt-2">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-brand-200/60 pb-3">
+        <h3 class="text-2xl font-black text-brand-950 tracking-tight">Our Furniture Collections</h3>
+        <p class="text-xs text-brand-600 font-medium">Real-time updated inventory from our shop</p>
+      </div>
+
+      <div class="flex flex-wrap gap-2 text-xs sm:text-sm font-semibold" id="category-filters">
+        <button onclick="filterCategory('All')" class="category-btn active-cat bg-brand-900 text-amber-300 px-4 py-2.5 rounded-xl transition shadow-sm border border-brand-800">All Items</button>
+        <button onclick="filterCategory('Living Room')" class="category-btn bg-white text-slate-700 hover:bg-brand-100 border border-slate-200 px-4 py-2.5 rounded-xl transition">Living Room</button>
+        <button onclick="filterCategory('Bedroom')" class="category-btn bg-white text-slate-700 hover:bg-brand-100 border border-slate-200 px-4 py-2.5 rounded-xl transition">Bedroom</button>
+        <button onclick="filterCategory('Dining')" class="category-btn bg-white text-slate-700 hover:bg-brand-100 border border-slate-200 px-4 py-2.5 rounded-xl transition">Dining Room</button>
+        <button onclick="filterCategory('Office')" class="category-btn bg-white text-slate-700 hover:bg-brand-100 border border-slate-200 px-4 py-2.5 rounded-xl transition">Office Furniture</button>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div class="col-span-full py-16 text-center text-slate-500">
+        <i class="fa-solid fa-spinner fa-spin text-3xl text-brand-700"></i>
+        <p class="mt-3 font-bold text-slate-600">Sohil Furniture Mart inventory load ho rahi hai...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ADMIN PANEL VIEW -->
+  <main id="admin-view" class="hidden flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-brand-200 space-y-8">
+      
+      <!-- Admin Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-brand-100 pb-5">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-md border border-emerald-300">
+              <i class="fa-solid fa-shield-check"></i> PIN Unlocked
+            </span>
+            <h2 class="text-2xl font-black text-brand-950">Admin Panel - Furniture Management</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">Sohil Furniture Mart ke products add, update aur delete karein.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openChangePinModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border">
+            <i class="fa-solid fa-key"></i> Change PIN
+          </button>
+          <button onclick="lockAdmin()" class="bg-rose-100 hover:bg-rose-200 text-rose-800 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 border border-rose-200">
+            <i class="fa-solid fa-lock"></i> Lock Panel
+          </button>
+        </div>
+      </div>
+
+      <!-- Add New Furniture Form -->
+      <div class="bg-brand-50/60 p-6 rounded-2xl border border-brand-200/80 space-y-4">
+        <h3 class="text-base font-extrabold text-brand-950 flex items-center gap-2">
+          <i class="fa-solid fa-plus-circle text-brand-700"></i> Add New Furniture Item
+        </h3>
+        <form id="add-product-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="text-xs font-extrabold text-brand-900 uppercase">Furniture Title</label>
+            <input type="text" id="p-title" required placeholder="e.g. Royal Teak Wood 3-Seater Sofa" class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-extrabold text-brand-900 uppercase">Category</label>
+            <select id="p-category" required class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none bg-white">
+              <option value="Living Room">Living Room</option>
+              <option value="Bedroom">Bedroom</option>
+              <option value="Dining">Dining</option>
+              <option value="Office">Office</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-extrabold text-brand-900 uppercase">Price (₹)</label>
+            <input type="number" id="p-price" required placeholder="28500" class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-extrabold text-brand-900 uppercase">Image URL (Unsplash or direct link)</label>
+            <input type="url" id="p-image" required placeholder="https://images.unsplash.com/photo-..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none">
+          </div>
+
+          <div class="md:col-span-2 space-y-1">
+            <label class="text-xs font-extrabold text-brand-900 uppercase">Material / Dimensions / Warranty Info</label>
+            <textarea id="p-desc" rows="2" placeholder="e.g. Premium Sheesham Wood, Teak Finish, High-Density Cushioning, 5 Year Warranty." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-brand-600 outline-none"></textarea>
+          </div>
+
+          <button type="submit" class="md:col-span-2 bg-brand-900 hover:bg-brand-950 text-amber-300 font-extrabold py-3.5 rounded-xl transition shadow-md flex items-center justify-center gap-2">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Save & Publish Item
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Items Table -->
+      <div class="space-y-4">
+        <h3 class="text-lg font-bold text-slate-800">Live Inventory Management</h3>
+        <div class="overflow-x-auto rounded-2xl border border-slate-200">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-brand-100/60 text-brand-950 uppercase text-xs font-extrabold border-b border-brand-200">
+              <tr>
+                <th class="p-3.5">Product</th>
+                <th class="p-3.5">Category</th>
+                <th class="p-3.5">Price</th>
+                <th class="p-3.5 text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-product-table" class="divide-y divide-slate-100">
+              <!-- Table rows generated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PIN ENTRY MODAL FOR ADMIN -->
+  <div id="pin-modal" class="fixed inset-0 bg-brand-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white max-w-md w-full rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6 border border-brand-200 text-center relative">
+      <button onclick="closeAdminPinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      
+      <div class="bg-brand-100 text-brand-900 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto shadow-inner text-2xl">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+
+      <div class="space-y-1">
+        <h3 class="text-xl font-black text-brand-950">Admin Authentication</h3>
+        <p class="text-xs text-slate-500">Sohil Furniture Mart admin panel open karne ke liye PIN enter karein.</p>
+        <p class="text-[11px] text-amber-800 font-bold bg-amber-50 py-1 rounded-md mt-1">Default PIN: 1234</p>
+      </div>
+
+      <form id="pin-form" onsubmit="handlePinSubmit(event)" class="space-y-4">
+        <input type="password" id="admin-pin-input" maxlength="8" required placeholder="Enter Admin PIN" class="w-full text-center tracking-widest text-2xl p-3.5 rounded-xl border-2 border-slate-300 focus:border-brand-700 outline-none font-extrabold">
+        
+        <div id="pin-error-msg" class="text-xs text-rose-600 font-bold hidden">
+          Incorrect PIN! Dobara try karein.
+        </div>
+
+        <button type="submit" class="w-full bg-brand-900 hover:bg-brand-950 text-amber-300 font-extrabold py-3.5 rounded-xl transition shadow-lg">
+          Unlock Admin Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHANGE PIN MODAL -->
+  <div id="change-pin-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white max-w-sm w-full rounded-2xl shadow-2xl p-6 space-y-4 text-center">
+      <h3 class="text-lg font-bold text-brand-950">Change Admin PIN</h3>
+      <input type="password" id="new-pin-input" maxlength="8" placeholder="Enter New PIN" class="w-full text-center text-xl p-3 rounded-xl border text-slate-800 font-bold">
+      <div class="flex gap-2">
+        <button onclick="closeChangePinModal()" class="flex-1 bg-slate-100 text-slate-700 font-bold py-2.5 rounded-xl text-sm">Cancel</button>
+        <button onclick="saveNewPin()" class="flex-1 bg-brand-900 text-white font-bold py-2.5 rounded-xl text-sm">Save PIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART & CHECKOUT MODAL -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white max-w-lg w-full rounded-3xl shadow-2xl p-6 space-y-5 max-h-[90vh] flex flex-col border border-brand-100">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="text-xl font-extrabold text-brand-950 flex items-center gap-2">
+          <i class="fa-solid fa-bag-shopping text-brand-800"></i> Your Furniture Cart
+        </h3>
+        <button onclick="toggleCartModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <!-- Cart Items Container -->
+      <div id="cart-items" class="flex-1 overflow-y-auto space-y-3 pr-1">
+        <!-- Dynamically rendered cart items -->
+      </div>
+
+      <!-- Order Summary & Customer Details -->
+      <div class="border-t pt-4 space-y-4">
+        <div class="flex justify-between font-black text-lg text-brand-950">
+          <span>Total Estimated Price:</span>
+          <span id="cart-total" class="text-brand-800">₹0</span>
+        </div>
+
+        <div class="space-y-2">
+          <input type="text" id="cust-name" placeholder="Aapka Naam (Customer Name)" class="w-full p-3 rounded-xl border text-sm outline-none focus:ring-2 focus:ring-brand-600">
+          <input type="text" id="cust-address" placeholder="Delivery Address & City" class="w-full p-3 rounded-xl border text-sm outline-none focus:ring-2 focus:ring-brand-600">
+        </div>
+
+        <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3.5 rounded-xl transition flex items-center justify-center gap-2 shadow-lg">
+          <i class="fa-brands fa-whatsapp text-xl"></i> Send Order on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM ALERT MODAL -->
+  <div id="custom-alert" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 max-w-xs w-full text-center space-y-4 shadow-xl">
+      <div id="custom-alert-icon" class="text-3xl text-amber-600">
+        <i class="fa-solid fa-circle-info"></i>
+      </div>
+      <p id="custom-alert-msg" class="text-sm font-bold text-slate-800"></p>
+      <button onclick="closeCustomAlert()" class="w-full bg-brand-900 text-white font-bold py-2 rounded-xl text-xs">OK</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-950 text-brand-200/80 mt-auto py-10 border-t border-brand-900 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <div>
+          <h4 class="text-lg font-black text-amber-300">SOHIL FURNITURE MART</h4>
+          <p class="text-xs text-brand-300/80 mt-1">Quality Wood, Modern Designs & Trusted Furniture Partner.</p>
+        </div>
+        <div class="flex items-center gap-6 font-semibold text-xs">
+          <button onclick="switchTab('shop')" class="hover:text-amber-300 transition">Home Catalog</button>
+          <button onclick="openAdminPinModal()" class="hover:text-amber-300 transition">Admin Login</button>
+          <button onclick="contactWhatsAppDirect()" class="hover:text-amber-300 transition">WhatsApp Support</button>
+        </div>
+      </div>
+      <div class="border-t border-brand-900 pt-6 text-center text-xs text-brand-400">
+        <p>© 2026 Sohil Furniture Mart. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FIREBASE MODULES -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 🔴 REPLACE WITH YOUR FIREBASE CONFIG KEYS
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY_HERE",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    let db;
+    let productsRef;
+    let isFirebaseReady = false;
+
+    try {
+      if(firebaseConfig.apiKey !== "YOUR_API_KEY_HERE") {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        productsRef = collection(db, "products");
+        isFirebaseReady = true;
+      }
+    } catch(e) {
+      console.warn("Firebase not configured yet. Running in local fallback mode.");
+    }
+
+    // Default Fallback Products
+    let localProducts = [
+      { id: '1', title: 'Royal Sheesham Teak 3-Seater Sofa', category: 'Living Room', price: 34500, image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600', desc: 'Premium teak wood frame with high-density plush cushions.' },
+      { id: '2', title: 'King Size Designer Hydraulic Bed', category: 'Bedroom', price: 42000, image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600', desc: 'Solid wood headboard with heavy duty hydraulic storage.' },
+      { id: '3', title: '6-Seater Solid Wood Dining Table Set', category: 'Dining', price: 29900, image: 'https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600', desc: 'Handcrafted wooden dining table with cushioned comfortable chairs.' },
+      { id: '4', title: 'Ergonomic Executive Office Chair', category: 'Office', price: 8500, image: 'https://images.unsplash.com/photo-1580481072645-022f9a6d83d0?w=600', desc: 'Breathable mesh back with adjustable lumbar support and headrest.' }
+    ];
+
+    let cart = [];
+    let currentCategory = 'All';
+    let isAdminUnlocked = false;
+    let adminPin = localStorage.getItem('sohil_admin_pin') || '1234';
+
+    // Real-Time Firebase Listener or Fallback Sync
+    if (isFirebaseReady && productsRef) {
+      onSnapshot(productsRef, (snapshot) => {
+        localProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        renderProducts();
+        renderAdminTable();
+      }, (err) => {
+        console.error("Firestore error:", err);
+        renderProducts();
+        renderAdminTable();
+      });
+    } else {
+      setTimeout(() => {
+        renderProducts();
+        renderAdminTable();
+      }, 300);
+    }
+
+    // Render Product Cards
+    window.renderProducts = function() {
+      const grid = document.getElementById('product-grid');
+      const filtered = currentCategory === 'All' 
+        ? localProducts 
+        : localProducts.filter(p => p.category === currentCategory);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-400 font-bold">Is category mein filhal koi furniture item nahi hai.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-100 flex flex-col justify-between group">
+          <div>
+            <div class="relative h-52 bg-slate-100 overflow-hidden">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600'">
+              <span class="absolute top-3 left-3 bg-brand-950/80 backdrop-blur-md text-amber-300 text-[11px] font-black px-3 py-1 rounded-lg uppercase tracking-wider">${p.category}</span>
+            </div>
+            <div class="p-5 space-y-2">
+              <h4 class="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-brand-800 transition-colors">${p.title}</h4>
+              <p class="text-xs text-slate-500 leading-relaxed line-clamp-2">${p.desc || 'Sohil Furniture Mart premium quality guarantee.'}</p>
+            </div>
+          </div>
+          <div class="p-5 pt-0 space-y-3">
+            <div class="text-2xl font-black text-brand-950">₹${Number(p.price).toLocaleString('en-IN')}</div>
+            <button onclick="addToCart('${p.id}')" class="w-full bg-brand-100 hover:bg-brand-900 hover:text-amber-300 text-brand-950 font-extrabold py-3 rounded-xl transition-all duration-200 text-sm flex items-center justify-center gap-2 border border-brand-200/80 shadow-sm">
+              <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+          </div>
+        </div>
+      `).join('');
+    };
+
+    // Render Admin Table
+    window.renderAdminTable = function() {
+      const table = document.getElementById('admin-product-table');
+      if (localProducts.length === 0) {
+        table.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400 font-bold">Koi furniture data nahi hai.</td></tr>`;
+        return;
+      }
+      table.innerHTML = localProducts.map(p => `
+        <tr class="hover:bg-brand-50/40 transition">
+          <td class="p-3.5 font-bold flex items-center gap-3">
+            <img src="${p.image}" class="w-12 h-12 rounded-xl object-cover border border-slate-200" onerror="this.src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=100'">
+            <span class="text-slate-800">${p.title}</span>
+          </td>
+          <td class="p-3.5 text-xs font-bold text-slate-600">${p.category}</td>
+          <td class="p-3.5 font-black text-brand-900">₹${Number(p.price).toLocaleString('en-IN')}</td>
+          <td class="p-3.5 text-right">
+            <button onclick="deleteProduct('${p.id}')" class="bg-rose-100 hover:bg-rose-600 hover:text-white text-rose-800 px-3 py-1.5 rounded-lg text-xs font-extrabold transition border border-rose-200">
+              <i class="fa-solid fa-trash-can"></i> Delete
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    // Add Product Form Submit
+    document.getElementById('add-product-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const newProduct = {
+        title: document.getElementById('p-title').value.trim(),
+        category: document.getElementById('p-category').value,
+        price: Number(document.getElementById('p-price').value),
+        image: document.getElementById('p-image').value.trim(),
+        desc: document.getElementById('p-desc').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+
+      if (isFirebaseReady) {
+        try {
+          await addDoc(productsRef, newProduct);
+          showAlert('🎉 Product Firestore me live publish ho gaya!');
+        } catch(err) {
+          showAlert('Firebase error: ' + err.message);
+        }
+      } else {
+        newProduct.id = Date.now().toString();
+        localProducts.unshift(newProduct);
+        renderProducts();
+        renderAdminTable();
+        showAlert('🎉 Product added locally!');
+      }
+
+      e.target.reset();
+    });
+
+    // Delete Product
+    window.deleteProduct = async function(id) {
+      if (confirm('Kya aap is furniture item ko shop se hatana chahte hain?')) {
+        if (isFirebaseReady) {
+          await deleteDoc(doc(db, "products", id));
+          showAlert('Product deleted from Firestore!');
+        } else {
+          localProducts = localProducts.filter(p => p.id !== id);
+          renderProducts();
+          renderAdminTable();
+          showAlert('Product deleted locally!');
+        }
+      }
+    };
+
+    // Filter Categories
+    window.filterCategory = function(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-900', 'text-amber-300', 'border-brand-800');
+        btn.classList.add('bg-white', 'text-slate-700');
+      });
+      event.target.classList.remove('bg-white', 'text-slate-700');
+      event.target.classList.add('bg-brand-900', 'text-amber-300', 'border-brand-800');
+      renderProducts();
+    };
+
+    // Cart Handlers
+    window.addToCart = function(id) {
+      const item = localProducts.find(p => p.id === id);
+      if (item) {
+        cart.push(item);
+        updateCartUI();
+        showAlert(`🛒 ${item.title} Cart mein add ho gaya!`);
+      }
+    };
+
+    function updateCartUI() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const cartContainer = document.getElementById('cart-items');
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = `<div class="text-center py-10 text-slate-400 font-bold">Cart abhi khali hai.</div>`;
+      } else {
+        cartContainer.innerHTML = cart.map((item, idx) => `
+          <div class="flex justify-between items-center bg-brand-50/50 p-3.5 rounded-2xl border border-brand-100">
+            <div class="flex items-center gap-3">
+              <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover">
+              <div>
+                <p class="font-bold text-sm text-brand-950">${item.title}</p>
+                <p class="text-xs font-extrabold text-brand-700">₹${Number(item.price).toLocaleString('en-IN')}</p>
+              </div>
+            </div>
+            <button onclick="removeFromCart(${idx})" class="text-rose-600 hover:text-rose-800 text-xs font-extrabold px-2 py-1 bg-rose-50 rounded-lg">Remove</button>
+          </div>
+        `).join('');
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      document.getElementById('cart-total').innerText = `₹${total.toLocaleString('en-IN')}`;
+    }
+
+    window.removeFromCart = function(idx) {
+      cart.splice(idx, 1);
+      updateCartUI();
+    };
+
+    // WhatsApp Order Checkout
+    window.checkoutWhatsApp = function() {
+      if (cart.length === 0) {
+        showAlert('Pehle cart me furniture items add karein!');
+        return;
+      }
+      const name = document.getElementById('cust-name').value.trim() || 'Customer';
+      const address = document.getElementById('cust-address').value.trim() || 'Address not provided';
+
+      let msg = `*NEW FURNITURE ORDER - SOHIL FURNITURE MART*%0A%0A`;
+      msg += `👤 *Customer Name:* ${name}%0A📍 *Address:* ${address}%0A%0A*Ordered Items:*%0A`;
+
+      cart.forEach((item, idx) => {
+        msg += `${idx + 1}. ${item.title} - ₹${item.price}%0A`;
+      });
+
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      msg += `%0A💰 *Total Price:* ₹${total.toLocaleString('en-IN')}%0A%0A Kripya delivery aur final confirm karein.`;
+
+      // 🔴 Replace with Sohil Furniture Mart WhatsApp Number
+      const whatsappNumber = "919876543210";
+      window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
+    };
+
+    window.contactWhatsAppDirect = function() {
+      const whatsappNumber = "919876543210";
+      window.open(`https://wa.me/${whatsappNumber}?text=Hello Sohil Furniture Mart! Mujhe furniture details chahiye.`, '_blank');
+    };
+
+    // Navigation & Tab Switching
+    window.switchTab = function(tab) {
+      if (tab === 'admin' && !isAdminUnlocked) {
+        openAdminPinModal();
+        return;
+      }
+
+      if (tab === 'shop') {
+        document.getElementById('shop-view').classList.remove('hidden');
+        document.getElementById('admin-view').classList.add('hidden');
+        
+        document.getElementById('nav-shop-btn').className = "text-brand-800 font-bold hover:text-brand-900 transition-colors flex items-center gap-2 border-b-2 border-brand-800 py-1";
+        document.getElementById('nav-admin-btn').className = "text-slate-500 hover:text-brand-800 transition-colors flex items-center gap-2 py-1";
+      } else {
+        document.getElementById('shop-view').classList.add('hidden');
+        document.getElementById('admin-view').classList.remove('hidden');
+
+        document.getElementById('nav-admin-btn').className = "text-brand-800 font-bold hover:text-brand-900 transition-colors flex items-center gap-2 border-b-2 border-brand-800 py-1";
+        document.getElementById('nav-shop-btn').className = "text-slate-500 hover:text-brand-800 transition-colors flex items-center gap-2 py-1";
+      }
+    };
+
+    // ADMIN PIN LOCK LOGIC
+    window.openAdminPinModal = function() {
+      if (isAdminUnlocked) {
+        switchTab('admin');
+      } else {
+        document.getElementById('pin-modal').classList.remove('hidden');
+        document.getElementById('admin-pin-input').focus();
+      }
+    };
+
+    window.closeAdminPinModal = function() {
+      document.getElementById('pin-modal').classList.add('hidden');
+      document.getElementById('pin-error-msg').classList.add('hidden');
+    };
+
+    window.handlePinSubmit = function(e) {
+      e.preventDefault();
+      const enteredPin = document.getElementById('admin-pin-input').value;
+      if (enteredPin === adminPin) {
+        isAdminUnlocked = true;
+        closeAdminPinModal();
+        document.getElementById('admin-pin-input').value = '';
+        switchTab('admin');
+        showAlert('🔓 Admin Panel Unlocked!');
+      } else {
+        document.getElementById('pin-error-msg').classList.remove('hidden');
+      }
+    };
+
+    window.lockAdmin = function() {
+      isAdminUnlocked = false;
+      switchTab('shop');
+      showAlert('🔒 Admin Panel Locked!');
+    };
+
+    window.openChangePinModal = function() {
+      document.getElementById('change-pin-modal').classList.remove('hidden');
+    };
+
+    window.closeChangePinModal = function() {
+      document.getElementById('change-pin-modal').classList.add('hidden');
+    };
+
+    window.saveNewPin = function() {
+      const newPin = document.getElementById('new-pin-input').value.trim();
+      if (newPin.length >= 4) {
+        adminPin = newPin;
+        localStorage.setItem('sohil_admin_pin', newPin);
+        closeChangePinModal();
+        showAlert('✅ Admin PIN updated successfully!');
+      } else {
+        showAlert('PIN kam se kam 4 characters ka hona chahiye.');
+      }
+    };
+
+    // Modal Toggles
+    window.toggleCartModal = function() {
+      document.getElementById('cart-modal').classList.toggle('hidden');
+    };
+
+    function showAlert(msg) {
+      document.getElementById('custom-alert-msg').innerText = msg;
+      document.getElementById('custom-alert').classList.remove('hidden');
+    }
+
+    window.closeCustomAlert = function() {
+      document.getElementById('custom-alert').classList.add('hidden');
+    };
+  </script>
+</body>
+</html>
