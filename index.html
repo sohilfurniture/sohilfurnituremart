@@ -242,8 +242,9 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-amber-950 text-amber-200/80 mt-auto py-8 text-center text-sm border-t border-amber-900">
+  <footer class="bg-amber-950 text-amber-200/80 mt-auto py-8 text-center text-sm border-t border-amber-900 space-y-2">
     <p>© 2026 Sohil Furniture Mart. All rights reserved.</p>
+    <p class="text-xs text-amber-400/60 font-mono tracking-widest">TEST67535</p>
   </footer>
 
   <!-- Firebase SDK Modules -->
@@ -251,7 +252,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // 🟢 Aapki Live Firebase Configuration connected ho chuki hai
     const firebaseConfig = {
       apiKey: "AIzaSyAZY8cCdHqOksqrUeW7WMHaYOgW7G2NAKo",
       authDomain: "furniture-shop-29342.firebaseapp.com",
@@ -376,7 +376,6 @@
       cart.push(item);
       updateCartUI();
       
-      // Meta Pixel Event - Add To Cart Tracking
       if (typeof fbq === 'function') {
         fbq('track', 'AddToCart', { content_name: item.title, value: item.price, currency: 'INR' });
       }
@@ -421,7 +420,6 @@
       const address = document.getElementById('cust-address').value || 'Not provided';
       const total = cart.reduce((sum, item) => sum + item.price, 0);
 
-      // Meta Pixel Event - Lead / Purchase Tracking
       if (typeof fbq === 'function') {
         fbq('track', 'Lead', { value: total, currency: 'INR' });
       }
@@ -434,7 +432,6 @@
       
       msg += `%0A*Total Amount:* ₹${total}`;
 
-      // 🔴 Apna WhatsApp Number yahan daalein (Country code ke saath e.g. 919876543210)
       const whatsappNum = "918511882726"; 
       window.open(`https://wa.me/${whatsappNum}?text=${msg}`, '_blank');
     };
@@ -451,7 +448,6 @@
 
     window.verifyAdminPassword = function() {
       const pass = document.getElementById('admin-password-input').value;
-      // 🔑 Admin Password (Default: 1234)
       if (pass === "1234") {
         closeAdminModal();
         switchTab('admin');
