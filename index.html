@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sohil Furniture Mart | Best Furniture Shop</title>
   
-  <!-- Meta Pixel Code -->
+  <!-- Meta Pixel Code with Session Deduplication Protection -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -15,8 +15,14 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
+  
   fbq('init', '1410378120434453');
-  fbq('track', 'PageView');
+
+  // 🛡️ REFRESH DUP GUARD: Sirf pehli baar page view track hoga, refresh par duplicate nahi hoga
+  if (!sessionStorage.getItem('fb_pageview_tracked')) {
+    fbq('track', 'PageView');
+    sessionStorage.setItem('fb_pageview_tracked', 'true');
+  }
   </script>
   <noscript><img height="1" width="1" style="display:none"
   src="https://www.facebook.com/tr?id=1410378120434453&ev=PageView&noscript=1"
@@ -410,7 +416,7 @@
       updateCartUI();
     };
 
-    // WhatsApp Checkout & Meta Events Tracking
+    // WhatsApp Checkout & Deduplicated Tracking
     window.checkoutWhatsApp = function() {
       if (cart.length === 0) {
         alert('Pehle cart me items add karein!');
@@ -421,14 +427,12 @@
       const total = cart.reduce((sum, item) => sum + item.price, 0);
       const itemNames = cart.map(i => i.title).join(', ');
 
-      // 🎯 Meta Pixel Multi-Event Tracking for WhatsApp Orders
+      // Unique Event ID to prevent duplicate leads from multiple quick clicks
+      const uniqueEventId = 'lead_' + Date.now();
+
       if (typeof fbq === 'function') {
-        // 1. Lead Event
-        fbq('track', 'Lead', { value: total, currency: 'INR', content_name: itemNames });
-        // 2. Purchase / Conversion Event
-        fbq('track', 'Purchase', { value: total, currency: 'INR', content_type: 'product', num_items: cart.length });
-        // 3. Custom Event for Specific WhatsApp Tracking
-        fbq('trackCustom', 'WhatsAppOrderSent', { customer_name: name, cart_total: total });
+        fbq('track', 'Lead', { value: total, currency: 'INR', content_name: itemNames }, { eventID: uniqueEventId });
+        fbq('track', 'Purchase', { value: total, currency: 'INR', content_type: 'product', num_items: cart.length }, { eventID: uniqueEventId });
       }
 
       let msg = `Hello Sohil Furniture Mart! Main order place karna chahta hoon:%0A%0A`;
