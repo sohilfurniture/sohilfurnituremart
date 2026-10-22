@@ -410,7 +410,7 @@
       updateCartUI();
     };
 
-    // WhatsApp Checkout
+    // WhatsApp Checkout & Meta Events Tracking
     window.checkoutWhatsApp = function() {
       if (cart.length === 0) {
         alert('Pehle cart me items add karein!');
@@ -419,9 +419,16 @@
       const name = document.getElementById('cust-name').value || 'Customer';
       const address = document.getElementById('cust-address').value || 'Not provided';
       const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const itemNames = cart.map(i => i.title).join(', ');
 
+      // 🎯 Meta Pixel Multi-Event Tracking for WhatsApp Orders
       if (typeof fbq === 'function') {
-        fbq('track', 'Lead', { value: total, currency: 'INR' });
+        // 1. Lead Event
+        fbq('track', 'Lead', { value: total, currency: 'INR', content_name: itemNames });
+        // 2. Purchase / Conversion Event
+        fbq('track', 'Purchase', { value: total, currency: 'INR', content_type: 'product', num_items: cart.length });
+        // 3. Custom Event for Specific WhatsApp Tracking
+        fbq('trackCustom', 'WhatsAppOrderSent', { customer_name: name, cart_total: total });
       }
 
       let msg = `Hello Sohil Furniture Mart! Main order place karna chahta hoon:%0A%0A`;
