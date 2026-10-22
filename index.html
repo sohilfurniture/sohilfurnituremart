@@ -4,6 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sohil Furniture Mart | Best Furniture Shop</title>
+  
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1410378120434453');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1410378120434453&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -356,6 +375,12 @@
       const item = allProducts.find(p => p.id === id);
       cart.push(item);
       updateCartUI();
+      
+      // Meta Pixel Event - Add To Cart Tracking
+      if (typeof fbq === 'function') {
+        fbq('track', 'AddToCart', { content_name: item.title, value: item.price, currency: 'INR' });
+      }
+
       alert(`🛒 ${item.title} cart mein add ho gaya!`);
     };
 
@@ -394,14 +419,19 @@
       }
       const name = document.getElementById('cust-name').value || 'Customer';
       const address = document.getElementById('cust-address').value || 'Not provided';
-      
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+      // Meta Pixel Event - Lead / Purchase Tracking
+      if (typeof fbq === 'function') {
+        fbq('track', 'Lead', { value: total, currency: 'INR' });
+      }
+
       let msg = `Hello Sohil Furniture Mart! Main order place karna chahta hoon:%0A%0A`;
       msg += `👤 *Name:* ${name}%0A📍 *Address:* ${address}%0A%0A*Items:*%0A`;
       cart.forEach((i, idx) => {
         msg += `${idx + 1}. ${i.title} - ₹${i.price}%0A`;
       });
       
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
       msg += `%0A*Total Amount:* ₹${total}`;
 
       // 🔴 Apna WhatsApp Number yahan daalein (Country code ke saath e.g. 919876543210)
